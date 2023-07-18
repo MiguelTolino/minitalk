@@ -3,51 +3,47 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmateo-t <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mcombeau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/06 17:43:31 by mmateo-t          #+#    #+#             */
-/*   Updated: 2019/11/22 21:10:37 by mmateo-t         ###   ########.fr       */
+/*   Created: 2021/11/24 18:06:58 by mcombeau          #+#    #+#             */
+/*   Updated: 2021/12/02 16:48:58 by mcombeau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	is_negative(int negative)
-{
-	if (negative != 0)
-	{
-		return (-1);
-	}
-	else
-	{
-		return (1);
-	}
-}
+/*
+	DESCRIPTION :
+	The function ft_atoi converts a string into an int.
 
-int			ft_atoi(const char *str)
+	RETURN VALUE :
+	The converted int.
+*/
+
+int	ft_atoi(const char *str)
 {
-	long int	num;
-	int			negative;
+	int	num;
+	int	isneg;
+	int	i;
 
 	num = 0;
-	negative = 0;
-	while (*str && (*str == ' ' || *str == '\n' || *str == '\t' ||
-			*str == '\v' || *str == '\f' || *str == '\r'))
-		++str;
-	if (*str == '-' || *str == '+')
+	isneg = 1;
+	i = 0;
+	while (str[i] && (str[i] == ' ' || str[i] == '\t'
+			|| str[i] == '\n' || str[i] == '\r'
+			|| str[i] == '\v' || str[i] == '\f'))
+		i++;
+	if (str[i] == '+')
+		i++;
+	else if (str[i] == '-')
 	{
-		if (*str == '-')
-			negative = -1;
-		str++;
+		isneg *= -1;
+		i++;
 	}
-	while (*str && ft_isdigit(*str))
+	while (ft_isdigit(str[i]))
 	{
-		num = num * 10 + *str - 48;
-		if (num * is_negative(negative) > 2147483647)
-			return (-1);
-		if (num * is_negative(negative) < -2147483648)
-			return (0);
-		str++;
+		num = (num * 10) + (str[i] - '0');
+		i++;
 	}
-	return ((int)(num * is_negative(negative)));
+	return (num * isneg);
 }

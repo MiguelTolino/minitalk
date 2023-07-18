@@ -3,100 +3,56 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmateo-t <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mcombeau <mcombeau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/08 16:17:09 by mmateo-t          #+#    #+#             */
-/*   Updated: 2019/11/24 17:34:28 by mmateo-t         ###   ########.fr       */
+/*   Created: 2021/11/27 16:51:42 by mcombeau          #+#    #+#             */
+/*   Updated: 2021/12/03 16:21:52 by mcombeau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static	size_t	ft_strlength(char *str)
+/*
+	DESCRIPTION :
+	The function ft_strtrim removes any characters of the given set from
+	the beginning and end of the given string s1, and allocates sufficient
+	memory to store the trimmed copy of the string.
+
+	RETURN VALUE :
+	A pointer to the trimmed copy of the string.
+	NULL if the memory allocation fails.
+*/
+
+static int	is_set(char c, char const *set)
 {
-	size_t i;
+	int	i;
 
 	i = 0;
-	while (str[i])
+	while (set[i])
 	{
+		if (set[i] == c)
+			return (1);
 		i++;
 	}
-	return (i);
+	return (0);
 }
 
-static	int		start(char *s1, char *set)
+char	*ft_strtrim(char const *s1, char const *set)
 {
-	size_t i;
-	size_t j;
-
-	i = 0;
-	while (s1[i])
-	{
-		j = 0;
-		while (set[j])
-		{
-			if (s1[i] == set[j])
-			{
-				break ;
-			}
-			j++;
-		}
-		if (set[j] == '\0')
-			break ;
-		i++;
-	}
-	return (i);
-}
-
-static int		end(char *s1, char *set)
-{
-	size_t i;
-	size_t j;
-
-	i = ft_strlength(s1) - 1;
-	while (i > 0)
-	{
-		j = 0;
-		while (set[j])
-		{
-			if (s1[i] == set[j])
-			{
-				break ;
-			}
-			j++;
-		}
-		if (set[j] == '\0')
-			break ;
-		i--;
-	}
-	return (i);
-}
-
-char			*ft_strtrim(char const *s1, char const *set)
-{
-	size_t	i;
-	size_t	count1;
-	size_t	count2;
-	char	*s2;
+	size_t	start;
+	size_t	end;
 
 	if (!s1)
-		return (NULL);
-	i = 0;
-	count1 = start((char*)s1, (char*)set);
-	count2 = end((char*)s1, (char*)set);
-	if (count1 == ft_strlength((char*)s1))
-	{
-		s2 = (char*)malloc(sizeof(char) * 1);
-		s2[0] = '\0';
-		return (s2);
-	}
-	else
-		s2 = (char*)malloc(sizeof(char) * (count2 - count1 + 2));
-	if (s2 == NULL)
-		return (s2);
-	i = 0;
-	while (count1 <= count2)
-		s2[i++] = s1[count1++];
-	s2[i] = '\0';
-	return (s2);
+		return (ft_strdup(""));
+	if (!set)
+		return (ft_strdup(s1));
+	start = 0;
+	end = ft_strlen(s1);
+	while (is_set(s1[start], set))
+		start++;
+	if (start == end)
+		return (ft_strdup(""));
+	while (is_set(s1[end - 1], set))
+		end--;
+	return (ft_substr(s1, start, end - start));
 }

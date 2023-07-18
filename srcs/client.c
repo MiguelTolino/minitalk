@@ -6,7 +6,7 @@
 /*   By: mmateo-t <mmateo-t@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 18:23:17 by mmateo-t          #+#    #+#             */
-/*   Updated: 2023/07/18 20:50:43 by mmateo-t         ###   ########.fr       */
+/*   Updated: 2023/07/18 22:02:44 by mmateo-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ int main(int argc, char const *argv[])
 		usage();
 	}
 	pid = ft_atoi(argv[1]);
-	printf("%i", )
 
 	ret = kill(pid, SIGUSR1);
 	if (ret > 0)

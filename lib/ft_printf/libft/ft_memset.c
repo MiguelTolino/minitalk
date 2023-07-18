@@ -3,27 +3,36 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmateo-t <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mcombeau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/05 13:12:26 by mmateo-t          #+#    #+#             */
-/*   Updated: 2019/11/21 20:24:24 by mmateo-t         ###   ########.fr       */
+/*   Created: 2021/11/22 13:48:14 by mcombeau          #+#    #+#             */
+/*   Updated: 2021/12/03 12:05:11 by mcombeau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
+/*
+	DESCRIPTION :
+	The function ft_memset fills the first len bytes of the memory area
+	pointed	to by b with the byte c. Both b and c are interpreted as 
+	unsigned char.
+
+	RETURN VALUE :
+	A pointer to memory area s.
+*/
+
 void	*ft_memset(void *b, int c, size_t len)
 {
-	size_t			i;
-	unsigned char	*ptr;
+	unsigned char	*p;
+	unsigned char	ch;
 
-	i = 0;
-	ptr = (unsigned char*)b;
-	while (i < len)
+	p = (unsigned char *)b;
+	ch = c;
+	while (len--)
 	{
-		*ptr = (unsigned char)c;
-		i++;
-		ptr++;
+		*p = ch;
+		p++;
 	}
 	return (b);
 }

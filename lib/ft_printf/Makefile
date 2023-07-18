@@ -1,60 +1,45 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: mmateo-t <mmateo-t@student.42.fr>          +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2019/12/16 12:15:01 by mmateo-t          #+#    #+#              #
-#    Updated: 2020/01/16 18:16:35 by mmateo-t         ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
+NAME			=	libftprintf.a
 
+CC				=	gcc
+CFLAGS			=	-Wall -Wextra -Werror
+AR				=	ar
+ARFLAGS 		=	rcs
+RM				=	rm -rf
 
+SRC				=	ft_printf ft_print_char ft_print_str ft_print_hex ft_print_int ft_print_ptr ft_print_unsigned ft_nbr_len ft_flags ft_flags_utils ft_print_flag ft_printf_itoa ft_printf_utoa ft_printf_xtoa
+SRCS 			=	$(addsuffix .c, $(SRC))
 
-NAME = libftprintf.a
+OBJ_DIR			=	obj
+OBJS			=	$(SRCS:%.c=$(OBJ_DIR)/%.o)
 
-SRC_PF =	ft_printf.c convert_to_char.c format.c precision.c print_int.c print_percent.c \
-print_string.c to_space.c print_final_str.c modify_str.c print_hex.c ft_putnbr_base.c
+LIBFT_PATH		=	./libft
+LIBFT			=	$(LIBFT_PATH)/libft.a
 
-SRC_LFT = ft_* 
+$(OBJ_DIR)/%.o:		%.c
+					$(CC) $(CFLAGS) -c $< -o $@
 
-OBJET_PF = $(SRC_PF:.c=.o)
-OBJET_LFT = $(SRC_LFT:.c=.o)
-LIBFT_PATH =  libft
+all:				$(NAME)
 
-FLAGS = -Wall -Werror -Wextra
+bonus:				all
 
-LIB = $(addprefix $(LIBFT_PATH)/, $(OBJET_LFT))
-GCC = gcc
-AR = ar
-ARFLAGS = rc
-MAKE = make
+$(NAME):			$(LIBFT) $(OBJ_DIR) $(OBJS)
+				cp	$(LIBFT) $(NAME)
+					$(AR) $(ARFLAGS) $(NAME) $(OBJS)
 
-.PHONY: clean fclean all re
+$(LIBFT):
+					make -C $(LIBFT_PATH) all
 
-all: $(NAME)
-
-$(NAME): $(OBJET_PF) $(SRC_PF) $(LIB)
-		@$(MAKE) -C $(LIBFT_PATH)
-		@echo Compiling $(NAME)
-		@$(GCC) $(FLAGS) -c $(SRC_PF)
-		@$(AR) $(ARFLAGS) $(NAME) $(OBJET_PF) $(LIB)
-		@ranlib $(NAME)
-		@echo ======[Done]======
-
-%.o : %.c
-		@echo "$(NAME) >>> Add/Update $^"
+$(OBJ_DIR):
+					mkdir -p $(OBJ_DIR)
 
 clean:
-		@$(MAKE) -C $(LIBFT_PATH) clean
-		@echo Clean objects $(NAME)
-		@rm -rf $(OBJET_PF)
+					make -C $(LIBFT_PATH) clean
+					$(RM) $(OBJ_DIR)
 
-fclean: clean
-		@$(MAKE) -C $(LIBFT_PATH) fclean
-		@echo Clean $(NAME)
-		@rm -rf $(NAME)
-		@echo ======[Clean]======
+fclean:				clean
+					make -C $(LIBFT_PATH) fclean
+					$(RM) $(NAME)
 
-re: fclean all
+re:					fclean all
+
+.PHONY:				all bonus clean fclean re libft

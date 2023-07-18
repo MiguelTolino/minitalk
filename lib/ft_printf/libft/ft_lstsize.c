@@ -1,28 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstsize_bonus.c                                 :+:      :+:    :+:   */
+/*   ft_lstsize.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmateo-t <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mcombeau <mcombeau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/25 19:18:44 by mmateo-t          #+#    #+#             */
-/*   Updated: 2019/11/27 17:04:14 by mmateo-t         ###   ########.fr       */
+/*   Created: 2021/12/01 19:44:21 by mcombeau          #+#    #+#             */
+/*   Updated: 2021/12/02 15:15:06 by mcombeau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int		ft_lstsize(t_list *lst)
-{
-	int counter;
+/*
+	DESCRIPTION :
+	The function ft_lstsize measures the size of a given list by counting
+	the number of nodes in it.
 
-	counter = 0;
-	if (!lst)
-		return (0);
+	RETURN VALUE :
+	The integer number of nodes in the given list.
+*/
+
+int	ft_lstsize(t_list *lst)
+{
+	int	i;
+
+	i = 0;
 	while (lst)
 	{
-		counter++;
 		lst = lst->next;
+		i++;
 	}
-	return (counter);
+	return (i);
 }

@@ -1,27 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putchar_fd.c                                    :+:      :+:    :+:   */
+/*   ft_print_char.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mcombeau <mcombeau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/28 05:38:33 by mcombeau          #+#    #+#             */
-/*   Updated: 2021/12/02 15:40:12 by mcombeau         ###   ########.fr       */
+/*   Created: 2021/12/11 16:01:33 by mcombeau          #+#    #+#             */
+/*   Updated: 2021/12/17 14:26:33 by mcombeau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "ft_printf.h"
 
-/*
-	DESCRIPTION :
-	The function ft_putchar_fd writes the given character to the given
-	file descriptor.
-
-	RETURN VALUE :
-	None.
-*/
-
-void	ft_putchar_fd(char c, int fd)
+int	ft_print_c(char c)
 {
-	write(fd, &c, 1);
+	write(1, &c, 1);
+	return (1);
+}
+
+int	ft_print_char(char c, t_flags flags)
+{
+	int	count;
+
+	count = 0;
+	if (flags.left == 1)
+		count += ft_print_c(c);
+	count += ft_pad_width(flags.width, 1, flags.zero);
+	if (flags.left == 0)
+		count += ft_print_c(c);
+	return (count);
 }

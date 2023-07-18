@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putchar_fd.c                                    :+:      :+:    :+:   */
+/*   ft_lstnew.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mcombeau <mcombeau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/28 05:38:33 by mcombeau          #+#    #+#             */
-/*   Updated: 2021/12/02 15:40:12 by mcombeau         ###   ########.fr       */
+/*   Created: 2021/11/30 17:28:58 by mcombeau          #+#    #+#             */
+/*   Updated: 2021/12/02 15:13:17 by mcombeau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,22 @@
 
 /*
 	DESCRIPTION :
-	The function ft_putchar_fd writes the given character to the given
-	file descriptor.
+	The function ft_lstnew allocates memory for a new list node and 
+	initializes its content to the value passed as parameter, before
+	setting its next node to NULL. 
 
-	RETURN VALUE :
-	None.
+	RESULT VALUE :
+	The new list ode.
 */
 
-void	ft_putchar_fd(char c, int fd)
+t_list	*ft_lstnew(void *content)
 {
-	write(fd, &c, 1);
+	t_list	*list;
+
+	list = malloc(sizeof(t_list));
+	if (!list)
+		return (NULL);
+	list->content = content;
+	list->next = NULL;
+	return (list);
 }

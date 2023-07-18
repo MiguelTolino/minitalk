@@ -1,24 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstlast_bonus.c                                 :+:      :+:    :+:   */
+/*   ft_lstlast.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmateo-t <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mcombeau <mcombeau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/25 19:22:28 by mmateo-t          #+#    #+#             */
-/*   Updated: 2019/11/27 17:03:57 by mmateo-t         ###   ########.fr       */
+/*   Created: 2021/12/01 19:48:52 by mcombeau          #+#    #+#             */
+/*   Updated: 2021/12/02 16:51:11 by mcombeau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
+/*
+	DESCRIPTION :
+	The function ft_lstlast finds the last node in a given list.
+
+	RETURN VALUE :
+	The last node of a list.
+		[.]->[.]->[.]->[LAST]->[NULL]
+*/
+
 t_list	*ft_lstlast(t_list *lst)
 {
 	if (!lst)
 		return (NULL);
-	while (lst->next)
-	{
+	while (lst != NULL && lst->next != NULL)
 		lst = lst->next;
-	}
 	return (lst);
 }

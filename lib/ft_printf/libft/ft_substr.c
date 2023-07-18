@@ -3,35 +3,44 @@
 /*                                                        :::      ::::::::   */
 /*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmateo-t <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mcombeau <mcombeau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/08 15:54:55 by mmateo-t          #+#    #+#             */
-/*   Updated: 2019/11/24 11:57:15 by mmateo-t         ###   ########.fr       */
+/*   Created: 2021/11/26 16:50:44 by mcombeau          #+#    #+#             */
+/*   Updated: 2021/12/02 16:53:34 by mcombeau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char		*ft_substr(char const *s, unsigned int start, size_t len)
-{
-	size_t	i;
-	char	*substr;
+/*
+	DESCRIPTION :
+	The function ft_substr extracts a substring from the given string by
+	allocating sufficient memory for the new string starting at index start
+	and ending at len characters.
 
-	i = 0;
+	RETURN VALUE :
+	A pointer to the new string.
+	NULL if the memory allocation fails.
+*/
+
+char	*ft_substr(char const *s, unsigned int start, size_t len)
+{
+	char	*res;
+	char	*src;
+	size_t	reslen;
+
 	if (!s)
-	{
 		return (NULL);
-	}
-	if (ft_strlen(s) < start)
+	if (ft_strlen(s) < (size_t)start)
 		return (ft_strdup(""));
-	substr = (char*)malloc(sizeof(char) * (len + 1));
-	if (substr == NULL)
-		return (substr);
-	while (s[i] && i < len)
-	{
-		substr[i] = s[start + i];
-		i++;
-	}
-	substr[i] = '\0';
-	return (substr);
+	src = (char *)s + start;
+	if (ft_strlen(src) < len)
+		reslen = ft_strlen(src) + 1;
+	else
+		reslen = len + 1;
+	res = malloc(reslen * sizeof(char));
+	if (!res)
+		return (NULL);
+	ft_strlcpy(res, src, reslen);
+	return (res);
 }

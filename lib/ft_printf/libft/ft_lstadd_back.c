@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_lstadd_back.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mcombeau <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mcombeau <mcombeau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/22 13:51:11 by mcombeau          #+#    #+#             */
-/*   Updated: 2021/12/02 16:17:56 by mcombeau         ###   ########.fr       */
+/*   Created: 2021/12/01 19:56:07 by mcombeau          #+#    #+#             */
+/*   Updated: 2021/12/08 12:22:04 by mcombeau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,24 @@
 
 /*
 	DESCRIPTION :
-	The function ft_strlen measures the length of the given string str,
-	excluding the terminating \0 character.
+	The function ft_lstadd_back adds a new node to the back of a list:
+		[.]->[.]->[.]->[NEW]->[NULL]
 
 	RETURN VALUE :
-	The number of bytes in the string str.
+	None.
 */
 
-size_t	ft_strlen(const char *str)
+void	ft_lstadd_back(t_list **alst, t_list *new)
 {
-	size_t	i;
+	t_list	*tmp;
 
-	i = 0;
-	while (str[i] != '\0')
-		i++;
-	return (i);
+	if (!new)
+		return ;
+	if (!*alst)
+	{
+		*alst = new;
+		return ;
+	}
+	tmp = ft_lstlast(*alst);
+	tmp->next = new;
 }

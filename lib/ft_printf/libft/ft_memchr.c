@@ -3,31 +3,40 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmateo-t <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mcombeau <mcombeau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/05 14:11:02 by mmateo-t          #+#    #+#             */
-/*   Updated: 2019/11/21 20:21:25 by mmateo-t         ###   ########.fr       */
+/*   Created: 2021/11/25 21:57:14 by mcombeau          #+#    #+#             */
+/*   Updated: 2021/12/03 16:31:15 by mcombeau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
+/*
+	DESCRIPTION :
+	The function ft_memchr searches n bytes of the memory area pointed to
+	by s for the first occurence of c. Both c and the bytes of s are
+	interpreted as unsigned char.
+
+	RETURN VALUE:
+	A pointer to the matching byte. NULL if the character does not occur
+	in the given memory area.
+*/
+
 void	*ft_memchr(const void *s, int c, size_t n)
 {
-	size_t			i;
-	unsigned char	*ptr;
+	size_t				i;
+	unsigned char		ch;
+	const unsigned char	*str;
 
-	ptr = (unsigned char*)s;
+	ch = c;
+	str = (const unsigned char *)s;
 	i = 0;
 	while (i < n)
 	{
-		if (*ptr == (unsigned char)c)
-		{
-			return ((void*)ptr);
-		}
-		ptr++;
+		if (str[i] == ch)
+			return ((void *)s + i);
 		i++;
 	}
-	ptr = NULL;
-	return ((void*)ptr);
+	return (0);
 }

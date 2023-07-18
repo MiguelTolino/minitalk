@@ -3,38 +3,48 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmateo-t <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mcombeau <mcombeau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/06 17:31:51 by mmateo-t          #+#    #+#             */
-/*   Updated: 2019/11/21 20:30:47 by mmateo-t         ###   ########.fr       */
+/*   Created: 2021/11/25 23:07:33 by mcombeau          #+#    #+#             */
+/*   Updated: 2021/12/03 16:33:24 by mcombeau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <stdio.h>
 
-char	*ft_strnstr(const char *haystack, const char *needle, size_t len)
+/*
+	DESCRIPTION :
+	The function ft_strnstr searches the first n bytes of the given string
+	s1 for the first occurence of the full string s2.
+	Characters that appear after \0 are not searched.
+
+	RETURN VALUE :
+	A pointer to the first character of the first occurrence of s2.
+	A pointer to s1 if s2 is empty.
+	NULL if s2 occurs nowhere in s1.
+*/
+
+char	*ft_strnstr(const char *s1, const char *s2, size_t n)
 {
+	size_t	s2len;
 	size_t	i;
 	size_t	j;
-	char	*big;
-	char	*little;
 
-	big = (char*)haystack;
-	little = (char*)needle;
+	s2len = ft_strlen(s2);
+	if (s1 == s2 || s2len == 0)
+		return ((char *)s1);
 	i = 0;
-	if (*little == '\0')
-		return (big);
-	while (big[i] && i < len)
+	while (i < n && s1[i] != '\0')
 	{
 		j = 0;
-		while (big[i + j] == little[j] && little[j] && (i + j) < len)
+		while (s1[i + j] != '\0' && s2[j] != '\0'
+			&& (i + j) < n && s1[i + j] == s2[j])
 		{
 			j++;
+			if ((j == n && j == s2len) || j == s2len)
+				return ((char *)(s1 + i));
 		}
-		if (little[j] == '\0')
-			return (big + i);
 		i++;
 	}
-	return (NULL);
+	return (0);
 }

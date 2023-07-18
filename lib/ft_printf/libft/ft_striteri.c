@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_striteri.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mcombeau <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mcombeau <mcombeau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/22 13:51:11 by mcombeau          #+#    #+#             */
-/*   Updated: 2021/12/02 16:17:56 by mcombeau         ###   ########.fr       */
+/*   Created: 2021/11/28 05:10:58 by mcombeau          #+#    #+#             */
+/*   Updated: 2021/12/02 16:00:25 by mcombeau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,23 @@
 
 /*
 	DESCRIPTION :
-	The function ft_strlen measures the length of the given string str,
-	excluding the terminating \0 character.
+	The function ft_striteri applies the given function f to each
+	character in the given string s.
 
 	RETURN VALUE :
-	The number of bytes in the string str.
+	None.
 */
 
-size_t	ft_strlen(const char *str)
+void	ft_striteri(char *s, void (*f)(unsigned int, char*))
 {
-	size_t	i;
+	int	i;
 
+	if (!s || !f)
+		return ;
 	i = 0;
-	while (str[i] != '\0')
+	while (s[i])
+	{
+		(*f)(i, &s[i]);
 		i++;
-	return (i);
+	}
 }

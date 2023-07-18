@@ -1,28 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstadd_back_bonus.c                             :+:      :+:    :+:   */
+/*   ft_print_flag.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmateo-t <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mcombeau <mcombeau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/27 17:58:14 by mmateo-t          #+#    #+#             */
-/*   Updated: 2019/11/27 18:22:14 by mmateo-t         ###   ########.fr       */
+/*   Created: 2021/12/16 18:11:01 by mcombeau          #+#    #+#             */
+/*   Updated: 2021/12/17 13:49:39 by mcombeau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "ft_printf.h"
 
-void	ft_lstadd_back(t_list **lst, t_list *new)
+int	ft_pad_width(int total_width, int size, int zero)
 {
-	t_list *begin;
+	int	count;
 
-	begin = *lst;
-	if (begin == NULL)
-		*lst = new;
-	else
+	count = 0;
+	while (total_width - size > 0)
 	{
-		while (begin->next)
-			begin = begin->next;
-		begin->next = new;
+		if (zero)
+			count += ft_print_c('0');
+		else
+			count += ft_print_c(' ');
+		total_width--;
 	}
+	return (count);
 }
