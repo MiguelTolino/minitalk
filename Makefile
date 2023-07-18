@@ -6,7 +6,7 @@
 #    By: mmateo-t <mmateo-t@student.42madrid>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/06/24 16:04:19 by user42            #+#    #+#              #
-#    Updated: 2023/07/18 19:02:12 by mmateo-t         ###   ########.fr        #
+#    Updated: 2023/07/18 19:30:59 by mmateo-t         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,7 +51,12 @@ $(%.o): $(%.c)
 		@echo "Creating objects"
 
 bin:
-	mkdir bin
+	@if [ ! -d "bin" ]; then \
+		mkdir -p "bin"; \
+		echo "Created 'bin' directory"; \
+	else \
+		echo "'bin' directory exists.\n"; \
+	fi
 
 libft:
 		make -C $(LIBFT_PATH) all
@@ -78,4 +83,7 @@ re:
 	make fclean all
 	@echo "$(BLUE)All files has been deleted and recompiled$(END)"
 
-.PHONY: clean fclean all re debug libft
+run:
+	./$(BINPATH)/$(SERVERNAME)
+
+.PHONY: clean fclean all re debug libft bin run
