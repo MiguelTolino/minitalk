@@ -1,24 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   server.h                                           :+:      :+:    :+:   */
+/*   ft_lstsize_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmateo-t <mmateo-t@student.42madrid>       +#+  +:+       +#+        */
+/*   By: mmateo-t <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/18 19:09:19 by mmateo-t          #+#    #+#             */
-/*   Updated: 2023/07/18 20:58:48 by mmateo-t         ###   ########.fr       */
+/*   Created: 2019/11/25 19:18:44 by mmateo-t          #+#    #+#             */
+/*   Updated: 2019/11/27 17:04:14 by mmateo-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SERVER_H
-#define SERVER_H
+#include "libft.h"
 
-#include <unistd.h>
-#include <stdlib.h>
-#include "../lib/ft_printf/ft_printf.h"
-#include "colors.h"
+int		ft_lstsize(t_list *lst)
+{
+	int counter;
 
-#define SERVER_MSG "[SERVER]: "
-#define MSG "[MESSAGE]: ["
-
-#endif
+	counter = 0;
+	if (!lst)
+		return (0);
+	while (lst)
+	{
+		counter++;
+		lst = lst->next;
+	}
+	return (counter);
+}

@@ -1,24 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   server.h                                           :+:      :+:    :+:   */
+/*   print_percent.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmateo-t <mmateo-t@student.42madrid>       +#+  +:+       +#+        */
+/*   By: mmateo-t <mmateo-t@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/18 19:09:19 by mmateo-t          #+#    #+#             */
-/*   Updated: 2023/07/18 20:58:48 by mmateo-t         ###   ########.fr       */
+/*   Created: 2019/12/16 16:18:35 by mmateo-t          #+#    #+#             */
+/*   Updated: 2020/01/15 18:41:28 by mmateo-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SERVER_H
-#define SERVER_H
+#include "ft_printf.h"
 
-#include <unistd.h>
-#include <stdlib.h>
-#include "../lib/ft_printf/ft_printf.h"
-#include "colors.h"
-
-#define SERVER_MSG "[SERVER]: "
-#define MSG "[MESSAGE]: ["
-
-#endif
+void	print_percent(t_parameters *param)
+{
+	param->final_str = ft_strdup("%");
+}

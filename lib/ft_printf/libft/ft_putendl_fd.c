@@ -1,24 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   server.h                                           :+:      :+:    :+:   */
+/*   ft_putendl_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmateo-t <mmateo-t@student.42madrid>       +#+  +:+       +#+        */
+/*   By: mmateo-t <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/18 19:09:19 by mmateo-t          #+#    #+#             */
-/*   Updated: 2023/07/18 20:58:48 by mmateo-t         ###   ########.fr       */
+/*   Created: 2019/11/21 17:27:30 by mmateo-t          #+#    #+#             */
+/*   Updated: 2019/11/21 17:32:03 by mmateo-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SERVER_H
-#define SERVER_H
+#include "libft.h"
 
-#include <unistd.h>
-#include <stdlib.h>
-#include "../lib/ft_printf/ft_printf.h"
-#include "colors.h"
+void	ft_putendl_fd(char *s, int fd)
+{
+	int i;
 
-#define SERVER_MSG "[SERVER]: "
-#define MSG "[MESSAGE]: ["
-
-#endif
+	i = 0;
+	if (s)
+	{
+		while (s[i])
+		{
+			write(fd, &s[i], 1);
+			i++;
+		}
+		write(fd, "\n", 1);
+	}
+}

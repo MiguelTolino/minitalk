@@ -6,7 +6,7 @@
 #    By: mmateo-t <mmateo-t@student.42madrid>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/06/24 16:04:19 by user42            #+#    #+#              #
-#    Updated: 2023/07/18 19:30:59 by mmateo-t         ###   ########.fr        #
+#    Updated: 2023/07/18 21:04:28 by mmateo-t         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,17 +34,17 @@ BINPATH:= bin
 CC:= cc
 CFLAGS:= -Wall -Werror -Wextra -std=c99
 RM :=	rm -rvf
-LIBFT_PATH:= libft/
-LIBFT_LIB:= -L$(LIBFT_PATH) $(LIBFT_PATH)libft.a
+PRINTF_PATH:= lib/ft_printf
+PRINTF_LIB:= -L$(PRINTF_PATH) $(PRINTF_PATH)/libftprintf.a
 DEBUG_FLAG:= -g
 
-all: libft bin $(SERVERNAME) $(CLIENTNAME) msg
+all: printf bin $(SERVERNAME) $(CLIENTNAME) msg
 
 $(SERVERNAME): $(S_OBJS)
-	$(CC) $(CFLAGS) $(S_OBJS) -o $(BINPATH)/$(SERVERNAME) $(LIBFT_LIB)
+	$(CC) $(CFLAGS) $(S_OBJS) -o $(BINPATH)/$(SERVERNAME) $(PRINTF_LIB)
 
 $(CLIENTNAME): $(C_OBJS)
-	$(CC) $(CFLAGS) $(C_OBJS) -o $(BINPATH)/$(CLIENTNAME) $(LIBFT_LIB)
+	$(CC) $(CFLAGS) $(C_OBJS) -o $(BINPATH)/$(CLIENTNAME) $(PRINTF_LIB)
 
 $(%.o): $(%.c)
 		$(CC) -c $^ -o $@
@@ -58,10 +58,10 @@ bin:
 		echo "'bin' directory exists.\n"; \
 	fi
 
-libft:
-		make -C $(LIBFT_PATH) all
+printf:
+		make -C $(PRINTF_PATH) all
 		@echo  "$(BLUE)------------------------------------------------------------------------$(END)"
-		@echo  "$(GREEN)Libft compiled$(END)"
+		@echo  "$(GREEN)Printf and libft compiled$(END)"
 		@echo  "$(BLUE)------------------------------------------------------------------------$(END)"
 
 clean:
@@ -69,7 +69,7 @@ clean:
 		$(RM) $(S_OBJS) $(C_OBJS)
 fclean:
 		make clean
-		make -C $(LIBFT_PATH) fclean
+		make -C $(PRINTF_PATH) fclean
 		$(RM) $(BINPATH)
 		@echo  "$(BLUE)------------------------------------------------------------------------$(END)"
 		@echo  "$(BLUE)All files removed$(END)"
@@ -86,4 +86,4 @@ re:
 run:
 	./$(BINPATH)/$(SERVERNAME)
 
-.PHONY: clean fclean all re debug libft bin run
+.PHONY: clean fclean all re debug printf bin run

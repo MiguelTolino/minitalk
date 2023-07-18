@@ -1,24 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   server.h                                           :+:      :+:    :+:   */
+/*   ft_lstdelone_bonus.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmateo-t <mmateo-t@student.42madrid>       +#+  +:+       +#+        */
+/*   By: mmateo-t <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/18 19:09:19 by mmateo-t          #+#    #+#             */
-/*   Updated: 2023/07/18 20:58:48 by mmateo-t         ###   ########.fr       */
+/*   Created: 2019/11/27 18:24:41 by mmateo-t          #+#    #+#             */
+/*   Updated: 2019/11/27 18:30:13 by mmateo-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SERVER_H
-#define SERVER_H
+#include "libft.h"
 
-#include <unistd.h>
-#include <stdlib.h>
-#include "../lib/ft_printf/ft_printf.h"
-#include "colors.h"
-
-#define SERVER_MSG "[SERVER]: "
-#define MSG "[MESSAGE]: ["
-
-#endif
+void	ft_lstdelone(t_list *lst, void (*del)(void*))
+{
+	del(lst->content);
+	free(lst);
+	lst = NULL;
+}
