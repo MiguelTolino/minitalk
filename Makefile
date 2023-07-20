@@ -6,7 +6,7 @@
 #    By: mmateo-t <mmateo-t@student.42madrid>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/06/24 16:04:19 by user42            #+#    #+#              #
-#    Updated: 2023/07/18 22:00:04 by mmateo-t         ###   ########.fr        #
+#    Updated: 2023/07/20 16:44:48 by mmateo-t         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,11 +32,11 @@ SERVERNAME:= server
 CLIENTNAME:= client
 BINPATH:= bin
 CC:= cc
-CFLAGS:= -Wall -Werror -Wextra -std=c99
+DEBUG_FLAG:= -g
+CFLAGS:= -Wall -Werror -Wextra -std=c99 $(DEBUG_FLAG)
 RM :=	rm -rvf
 PRINTF_PATH:= lib/ft_printf
 PRINTF_LIB:= -L$(PRINTF_PATH) $(PRINTF_PATH)/libftprintf.a
-DEBUG_FLAG:= -g
 
 all: printf bin $(SERVERNAME) $(CLIENTNAME) msg
 

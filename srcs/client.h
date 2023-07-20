@@ -6,7 +6,7 @@
 /*   By: mmateo-t <mmateo-t@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 19:09:46 by mmateo-t          #+#    #+#             */
-/*   Updated: 2023/07/18 20:59:10 by mmateo-t         ###   ########.fr       */
+/*   Updated: 2023/07/20 15:57:47 by mmateo-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,5 +23,7 @@
 
 // Errors
 #define ERR_ARGS "Number of arguments invalid\n"
+
+#define MAX_SIZE 256
 
 #endif
