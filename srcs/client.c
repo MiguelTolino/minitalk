@@ -6,7 +6,7 @@
 /*   By: mmateo-t <mmateo-t@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 18:23:17 by mmateo-t          #+#    #+#             */
-/*   Updated: 2023/07/23 12:19:50 by mmateo-t         ###   ########.fr       */
+/*   Updated: 2023/07/23 18:37:29 by mmateo-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,9 @@ void send_char(pid_t pid, char c)
 	{
 		if (kill(pid, SIGUSR1) < 0)
 			throw_error("An unexpected signal error occurs [SIGUSR1]");
-		printf("%i\n", c);
 		c--;
 		usleep(100);
 	}
-	sleep(1);
 	if (kill(pid, SIGUSR2))
 		throw_error("An unexpected signal error occurs [SIGUSR2]");
 }
@@ -60,7 +58,7 @@ int main(int argc, char const *argv[])
 		send_char(pid, msg[i]);
 		i++;
 	}
-	sleep(1);
+	usleep(100);
 	ret = kill(pid, SIGUSR2);
 	free(msg);
 	return ret;
