@@ -6,11 +6,16 @@
 /*   By: mmateo-t <mmateo-t@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 18:23:14 by mmateo-t          #+#    #+#             */
-/*   Updated: 2023/07/20 17:58:51 by mmateo-t         ###   ########.fr       */
+/*   Updated: 2023/07/23 12:23:27 by mmateo-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "server.h"
+
+void throw_error(char *error)
+{
+	ft_printf("%s%s%s%s", RED, "Error: ", RESET, error);
+}
 
 void print_log(char *str, pid_t pid)
 {
@@ -26,6 +31,7 @@ void print_log(char *str, pid_t pid)
 	write(STDOUT_FILENO, RESET, ft_strlen(RESET));
 	write(STDOUT_FILENO, "\n", ft_strlen("\n"));
 	free(process);
+	// ft_printf("%s%s%s%s%s%i%s ]\n", LBLUE, SERVER_MSG, RESET, str, YELLOW, pid, RESET);
 }
 
 void print_str(char *str)
@@ -38,22 +44,24 @@ void print_str(char *str)
 	write(STDOUT_FILENO, str, ft_strlen(str));
 	write(STDOUT_FILENO, RESET, ft_strlen(RESET));
 	write(STDOUT_FILENO, "]\n", ft_strlen("]\n"));
+
+	// ft_printf("%s%s%s%s%s%i%s]\n", LBLUE, SERVER_MSG, RESET, MSG, ORANGE, str, RESET);
 }
 
 void sighandler(int signum)
 {
 	if (signum == SIGUSR1)
 	{
-		c++;
+		counter++;
 	}
 	if (signum == SIGUSR2)
 	{
-		if (c == -1)
+		if (counter == ENDOFCHAR)
 		{
-			c = -2;
+			counter = ENDOFSTR;
 		}
 		else
-			c = -1;
+			counter = ENDOFCHAR;
 	}
 }
 
@@ -62,9 +70,14 @@ int main(int argc, char const *argv[])
 	pid_t pid;
 	char *msg;
 	int i;
+	char c;
 
 	msg = ft_calloc(MAX_SIZE, sizeof(char));
+	if (!msg)
+		throw_error("Can't reserve memory");
+
 	pid = getpid();
+	c = 0;
 	signal(SIGUSR1, sighandler);
 	signal(SIGUSR2, sighandler);
 	print_log("PID | ", pid);
@@ -73,27 +86,22 @@ int main(int argc, char const *argv[])
 		i = 0;
 		while (1)
 		{
-			c = 0;
-			while (1)
+			counter = 0;
+			while (counter >= 0)
 			{
-				pause();
-				if (c >= 0)
-				{
-					msg[i] = (char)c;
-				}
-				else
-					break;
+				c = (char)counter;
 				printf("Char: %c\n", c);
+				pause();
 			}
-			printf("CharLAST: %i\n", c);
+			msg[i++] = c;
 			pause();
-			if (c == -2)
+			ft_printf("Msg: %s\n", msg);
+			if (counter == ENDOFSTR)
 			{
 				break;
 			}
-			i++;
 		}
-		printf("STR: %s\n", msg);
+		ft_printf("STR: %s\n", msg);
 		print_str(msg);
 		ft_bzero(msg, ft_strlen(msg));
 	}

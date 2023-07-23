@@ -6,7 +6,7 @@
 /*   By: mmateo-t <mmateo-t@student.42madrid>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 19:09:19 by mmateo-t          #+#    #+#             */
-/*   Updated: 2023/07/20 17:18:11 by mmateo-t         ###   ########.fr       */
+/*   Updated: 2023/07/21 14:46:42 by mmateo-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,9 @@
 #define SERVER_MSG "[SERVER]: "
 #define MSG "[MESSAGE]: ["
 #define MAX_SIZE 256
+#define ENDOFCHAR -1
+#define ENDOFSTR -2
 
-int c;
+int counter;
 
 #endif
