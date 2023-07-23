@@ -1,7 +1,7 @@
-# minitalk
+# 🗣️ minitalk
 The purpose of this project is to code a small data exchange program using UNIX signals.
 
-## Table of Contents
+## 📑 Table of Contents
 
 - [Introduction](#introduction)
 - [Requirements](#requirements)
@@ -10,20 +10,20 @@ The purpose of this project is to code a small data exchange program using UNIX 
 - [Features](#features)
 - [Contributing](#contributing)
 
-## Introduction
+## 🧮 Introduction
 
 The project aims to demonstrate the use of UNIX signals for inter-process communication (IPC). The project consists of two programs: a server and a client. The client sends a string message to the server, and the server receives and displays the message.
 
 The main challenge of the project is to implement a communication protocol using signals, where the client transmits the message bit by bit, and the server reconstructs the message from the individual bits received.
 
-## Requirements
+## 🧰 Requirements
 
 To run the project, you need the following:
 
 - A UNIX-based operating system (Linux or macOS).
 - *GCC* (GNU Compiler Collection) or any compatible C compiler.
 
-## Installation
+## 🌄 Installation
 
 1. Clone the repository to your local machine:
 
@@ -38,7 +38,7 @@ cd minitalk
 make all
 ```
 
-## Usage
+## ⏯️ Usage
 
 1. Start the server by running the following command:
 
@@ -62,13 +62,13 @@ Replace `[PID]` with the PID displayed by the server, and `[message]` with the s
 
 The client will transmit the message to the server, and the server will display the received message.
 
-## Features
+## 🆕 Features
 
 - Client-server communication using UNIX signals.
 - Reliable transmission of messages bit by bit.
 - Support for sending messages with various characters, including special characters and spaces.
 
-## Contributing
+## 🩹 Contributing
 
 Contributions to the project are welcome and encouraged! If you have any suggestions, improvements, or bug fixes, please create a pull request with your changes.
 
@@ -80,7 +80,7 @@ Contributions to the project are welcome and encouraged! If you have any suggest
 
 Please ensure your code follows the project's coding standards and practices.
 
-## Todo's
+## ☑️ Todo's
 - [ ] Reduce global variables
 - [ ] It has been approved by Norminette
 - [ ] Makefile does relink
