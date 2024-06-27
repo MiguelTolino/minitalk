@@ -20,8 +20,14 @@ C_OBJS := $(C_SRCS:.c=.o)
 # Compilation settings
 CC:= cc
 DEBUG_FLAG:= -g
-CFLAGS:= -Wall -Werror -Wextra -I.
-PRINTF_LIB:= -L$(PRINTF_PATH) $(PRINTF_PATH)/libftprintf.a
+# Include path for ft_printf
+PRINTF_INC:= -I$(PRINTF_PATH)
+# Library path and static library for linking
+PRINTF_LIB:= -L$(PRINTF_PATH) -lftprintf
+
+# Adjust CFLAGS to include only the include path
+CFLAGS:= -Wall -Werror -Wextra $(PRINTF_INC)
+
 RM :=	rm -rvf
 
 # Target names
@@ -32,51 +38,54 @@ CLIENTNAME:= client
 
 all: printf bin $(SERVERNAME) $(CLIENTNAME) msg
 
+
 $(SERVERNAME): $(S_OBJS)
-    $(CC) $(CFLAGS) $(S_OBJS) -o $(BINPATH)/$(SERVERNAME) $(PRINTF_LIB)
+	$(CC) $(S_OBJS) -o $(BINPATH)/$(SERVERNAME) $(CFLAGS) $(PRINTF_PATH)/libftprintf.a
+
 
 $(CLIENTNAME): $(C_OBJS)
-    $(CC) $(CFLAGS) $(C_OBJS) -o $(BINPATH)/$(CLIENTNAME) $(PRINTF_LIB)
+	$(CC) $(C_OBJS) -o $(BINPATH)/$(CLIENTNAME) $(CFLAGS) $(PRINTF_PATH)/libftprintf.a
+
 
 %.o: %.c
-    $(CC) -c $< -o $@
-    @echo "Creating objects"
+	$(CC) -c $< -o $@ $(CFLAGS)
+	@echo "Creating objects"
 
 bin:
-    @if [ ! -d "$(BINPATH)" ]; then \
-        mkdir -p "$(BINPATH)"; \
-        echo "Created '$(BINPATH)' directory"; \
-    else \
-        echo "'$(BINPATH)' directory exists.\n"; \
-    fi
+	@if [ ! -d "$(BINPATH)" ]; then \
+		mkdir -p "$(BINPATH)"; \
+		echo "Created '$(BINPATH)' directory"; \
+	else \
+		echo "'$(BINPATH)' directory exists.\n"; \
+	fi
 
 printf:
-    make -C $(PRINTF_PATH) all
-    @echo  "$(BLUE)------------------------------------------------------------------------$(END)"
-    @echo  "$(GREEN)Printf and libft compiled$(END)"
-    @echo  "$(BLUE)------------------------------------------------------------------------$(END)"
+	make -C $(PRINTF_PATH) all
+	@echo  "$(BLUE)------------------------------------------------------------------------$(END)"
+	@echo  "$(GREEN)Printf and libft compiled$(END)"
+	@echo  "$(BLUE)------------------------------------------------------------------------$(END)"
 
 clean:
-    @echo "$(BLUE)Removing objects...$(END)"
-    $(RM) $(S_OBJS) $(C_OBJS)
+	@echo "$(BLUE)Removing objects...$(END)"
+	$(RM) $(S_OBJS) $(C_OBJS)
 
 fclean: clean
-    make -C $(PRINTF_PATH) fclean
-    $(RM) $(BINPATH)
-    @echo  "$(BLUE)------------------------------------------------------------------------$(END)"
-    @echo  "$(BLUE)All files removed$(END)"
-    @echo  "$(BLUE)------------------------------------------------------------------------$(END)"
+	make -C $(PRINTF_PATH) fclean
+	$(RM) $(BINPATH)
+	@echo  "$(BLUE)------------------------------------------------------------------------$(END)"
+	@echo  "$(BLUE)All files removed$(END)"
+	@echo  "$(BLUE)------------------------------------------------------------------------$(END)"
 
 re: fclean all
 
 msg:
-    @echo  "$(BLUE)------------------------------------------------------------------------$(END)"
-    @echo  "$(GREEN)All files compiled$(END)"
-    @echo  "$(BLUE)------------------------------------------------------------------------$(END)"
+	@echo  "$(BLUE)------------------------------------------------------------------------$(END)"
+	@echo  "$(GREEN)All files compiled$(END)"
+	@echo  "$(BLUE)------------------------------------------------------------------------$(END)"
 
 run:
-    ./$(BINPATH)/$(SERVERNAME)
+	./$(BINPATH)/$(SERVERNAME)
 
 debug: CFLAGS += -DDEBUG
 debug: re
-    @echo "$(GREEN)Debug mode: ON$(END)"
+	@echo "$(GREEN)Debug mode: ON$(END)"

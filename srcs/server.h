@@ -17,7 +17,7 @@
 #include <signal.h>    // For SIGUSR1, SIGUSR2, and signal()
 #include <sys/types.h> // For pid_t
 #include <stdlib.h>
-#include "../lib/ft_printf/ft_printf.h"
+#include "ft_printf.h"
 #include "colors.h"
 #include <stdio.h>
 
