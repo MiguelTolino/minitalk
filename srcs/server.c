@@ -12,6 +12,24 @@
 
 #include "server.h"
 
+int binaryToDecimal(const char *binary)
+{
+	int decimal = 0;
+	int base = 1; // Start with 2^0
+	int len = ft_strlen(binary);
+
+	for (int i = len - 1; i >= 0; i--)
+	{
+		if (binary[i] == '1')
+		{
+			decimal += base;
+		}
+		base *= 2; // Move to the next power of 2
+	}
+
+	return decimal;
+}
+
 void throw_error(char *error)
 {
 	ft_printf("%s%s%s%s", RED, "Error: ", RESET, error);
@@ -29,24 +47,21 @@ void print_str(char *str)
 
 void sighandler(int signum)
 {
+	char c = 0;
+
 	if (signum == SIGUSR1)
 	{
-		counter++;
+		c = '0';
 	}
-	if (signum == SIGUSR2)
+	else if (signum == SIGUSR2)
 	{
-		if (!counter)
-		{
-			print_str(msg);
-			ft_bzero(msg, MAX_SIZE);
-			i = 0;
-		}
-		else
-		{
-			msg[i++] = counter;
-		}
-		counter = 0;
+		c = '1';
 	}
+	else
+	{
+		throw_error("Invalid signal\n");
+	}
+	ft_printf("%c", c);
 }
 
 int main(void)
@@ -54,12 +69,17 @@ int main(void)
 	pid_t pid;
 
 	pid = getpid();
+	if (pid < 0)
+	{
+		throw_error("Error getting PID\n");
+		return 1;
+	}
+
 	signal(SIGUSR1, sighandler);
 	signal(SIGUSR2, sighandler);
 	print_log(pid);
-	counter = 0;
-	i = 0;
 	msg = ft_calloc(MAX_SIZE, sizeof(char));
+	buff = ft_strdup("");
 	while (1)
 	{
 		pause();

@@ -27,8 +27,7 @@
 #define ENDOFCHAR -1
 #define ENDOFSTR -2
 
-int counter;
 static char *msg;
-int i;
+char *buff;
 
 #endif

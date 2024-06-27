@@ -12,6 +12,22 @@
 
 #include "client.h"
 
+char *charToBinary(char c)
+{
+	char *binary = (char *)malloc(9); // Each char is 8 bits + 1 for '\0'
+	if (!binary)
+		return NULL; // Check for malloc failure
+
+	binary[8] = '\0'; // Null-terminate the string
+	for (int i = 7; i >= 0; --i)
+	{
+		binary[i] = (c & 1) + '0'; // Convert bit to '0' or '1'
+		c >>= 1;				   // Move to the next bit
+	}
+
+	return binary;
+}
+
 void usage()
 {
 	write(STDOUT_FILENO, USAGE, ft_strlen(USAGE));
@@ -23,43 +39,52 @@ void throw_error(char *error)
 	ft_printf("%s%s%s%s", RED, "Error: ", RESET, error);
 }
 
-void send_char(pid_t pid, char c)
+void send_char(pid_t pid, char *c)
 {
 	while (c)
 	{
-		if (kill(pid, SIGUSR1) < 0)
-			throw_error("An unexpected signal error occurs [SIGUSR1]");
-		c--;
-		usleep(100);
+		if (*c == '0')
+		{
+			if (kill(pid, SIGUSR1) < 0)
+				throw_error("An unexpected signal error occurs [SIGUSR1]");
+		}
+		else if (*c == '1')
+		{
+			if (kill(pid, SIGUSR2) < 0)
+				throw_error("An unexpected signal error occurs [SIGUSR2]");
+		}
+		else
+		{
+			break;
+		}
+		 usleep(1000);
+		c++;
 	}
-	if (kill(pid, SIGUSR2))
-		throw_error("An unexpected signal error occurs [SIGUSR2]");
 }
 
 int main(int argc, char const *argv[])
 {
 	pid_t pid;
-	int ret;
-	int i;
 	char *msg;
+	int i;
 
 	if (argc != 3)
 	{
 		usage();
 	}
-	pid = ft_atoi(argv[1]);
-	msg = ft_strdup(argv[2]);
 	i = 0;
+	pid = ft_atoi(argv[1]);
+	if (pid < 0)
+		throw_error("PID must be a positive integer\n");
+	msg = ft_strdup(argv[2]);
 	if (!msg)
 		throw_error("Can't reserve memory");
-
 	while (msg[i])
 	{
-		send_char(pid, msg[i]);
+		printf("Sending %s\n", charToBinary(msg[i]));
+		send_char(pid, charToBinary(msg[i]));
 		i++;
 	}
-	usleep(100);
-	ret = kill(pid, SIGUSR2);
 	free(msg);
-	return ret;
+	return 0;
 }
