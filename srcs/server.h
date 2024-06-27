@@ -13,10 +13,13 @@
 #ifndef SERVER_H
 #define SERVER_H
 
-#include <unistd.h>
+#include <unistd.h>    // For getpid()
+#include <signal.h>    // For SIGUSR1, SIGUSR2, and signal()
+#include <sys/types.h> // For pid_t
 #include <stdlib.h>
 #include "../lib/ft_printf/ft_printf.h"
 #include "colors.h"
+#include <stdio.h>
 
 #define SERVER_MSG "[SERVER]: "
 #define MSG "[MESSAGE]: ["

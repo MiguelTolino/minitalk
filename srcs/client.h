@@ -13,11 +13,12 @@
 #ifndef CLIENT_H
 #define CLIENT_H
 
-#include <unistd.h>
 #include <stdlib.h>
-#include <signal.h>
-#include "../lib/ft_printf/ft_printf.h"
+#include "ft_printf.h"
 #include "colors.h"
+#include <sys/types.h> // For pid_t
+#include <signal.h>    // For SIGUSR1, SIGUSR2, and signal()
+#include <unistd.h>    // For getpid()
 
 #define USAGE "Usage: ./client <PID> <STRING>\n\nArguments:\n  PID          The Process ID (PID) of the target server. It must be a positive integer representing a running server process.\n  STRING       The string input to be sent to the server. It can be any sequence of characters, words, or numbers.\n\nExample:\n./client 12345 \"Hello, server!\"\n\n"
 
