@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   client.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmateo-t <mmateo-t@student.42madrid>       +#+  +:+       +#+        */
+/*   By: migueltolino <migueltolino@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 18:23:17 by mmateo-t          #+#    #+#             */
-/*   Updated: 2023/07/23 18:37:29 by mmateo-t         ###   ########.fr       */
+/*   Updated: 2024/07/01 23:28:40 by migueltolin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ int main(int argc, char const *argv[])
 		send_char(pid, charToBinary(msg[i]));
 		i++;
 	}
+	send_char(pid, charToBinary('\0'));
 	free(msg);
 	return 0;
 }
