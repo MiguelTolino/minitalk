@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   client.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmateo-t <mmateo-t@student.42madrid>       +#+  +:+       +#+        */
+/*   By: migueltolino <migueltolino@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 19:09:46 by mmateo-t          #+#    #+#             */
-/*   Updated: 2023/07/20 15:57:47 by mmateo-t         ###   ########.fr       */
+/*   Updated: 2024/07/01 23:27:05 by migueltolin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 // Errors
 #define ERR_ARGS "Number of arguments invalid\n"
 
+// Prototypes
 #define MAX_SIZE 256
-
+#define END_OF_STRING_SIGNAL_COUNT 8
 #endif

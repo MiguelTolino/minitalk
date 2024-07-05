@@ -6,7 +6,7 @@
 /*   By: migueltolino <migueltolino@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 18:23:17 by mmateo-t          #+#    #+#             */
-/*   Updated: 2024/07/01 23:28:40 by migueltolin      ###   ########.fr       */
+/*   Updated: 2024/07/05 16:18:51 by migueltolin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ char *charToBinary(char c)
 
 void usage()
 {
-	write(STDOUT_FILENO, USAGE, ft_strlen(USAGE));
+	ft_printf("%s", USAGE);
 	exit(EXIT_FAILURE);
 }
 
@@ -41,6 +41,7 @@ void throw_error(char *error)
 
 void send_char(pid_t pid, char *c)
 {
+	ft_printf("Sending %s\n", c);
 	while (c)
 	{
 		if (*c == '0')
@@ -66,8 +67,10 @@ int main(int argc, char const *argv[])
 {
 	pid_t pid;
 	char *msg;
+	char *binary;
 	int i;
 
+	binary = NULL;
 	if (argc != 3)
 	{
 		usage();
@@ -81,8 +84,8 @@ int main(int argc, char const *argv[])
 		throw_error("Can't reserve memory");
 	while (msg[i])
 	{
-		printf("Sending %s\n", charToBinary(msg[i]));
-		send_char(pid, charToBinary(msg[i]));
+		binary = charToBinary(msg[i]);
+		send_char(pid, binary);
 		i++;
 	}
 	send_char(pid, charToBinary('\0'));
