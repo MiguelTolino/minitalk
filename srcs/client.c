@@ -6,7 +6,7 @@
 /*   By: migueltolino <migueltolino@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 18:23:17 by mmateo-t          #+#    #+#             */
-/*   Updated: 2024/07/05 16:18:51 by migueltolin      ###   ########.fr       */
+/*   Updated: 2024/07/05 16:54:54 by migueltolin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void send_char(pid_t pid, char *c)
 		{
 			break;
 		}
-		 usleep(1000);
+		usleep(1000);
 		c++;
 	}
 }
