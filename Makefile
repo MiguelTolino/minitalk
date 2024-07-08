@@ -6,7 +6,6 @@ END=\033[0m
 
 # Paths
 SRCS_DIR:=srcs
-BINPATH:=bin
 PRINTF_PATH:=lib/ft_printf
 
 # Source files - Use wildcard to automatically include all .c files
@@ -34,30 +33,22 @@ RM :=	rm -rvf
 SERVERNAME:= server
 CLIENTNAME:= client
 
-.PHONY: all clean fclean re debug printf bin run msg
+.PHONY: all clean fclean re
 
-all: printf bin $(SERVERNAME) $(CLIENTNAME) msg
+all: printf $(SERVERNAME) $(CLIENTNAME) msg
 
 
 $(SERVERNAME): $(S_OBJS)
-	$(CC) $(S_OBJS) -o $(BINPATH)/$(SERVERNAME) $(CFLAGS) $(PRINTF_PATH)/libftprintf.a
+	$(CC) $(S_OBJS) -o $(SERVERNAME) $(CFLAGS) $(PRINTF_PATH)/libftprintf.a
 
 
 $(CLIENTNAME): $(C_OBJS)
-	$(CC) $(C_OBJS) -o $(BINPATH)/$(CLIENTNAME) $(CFLAGS) $(PRINTF_PATH)/libftprintf.a
+	$(CC) $(C_OBJS) -o $(CLIENTNAME) $(CFLAGS) $(PRINTF_PATH)/libftprintf.a
 
 
 %.o: %.c
 	$(CC) -c $< -o $@ $(CFLAGS)
 	@echo "Creating objects"
-
-bin:
-	@if [ ! -d "$(BINPATH)" ]; then \
-		mkdir -p "$(BINPATH)"; \
-		echo "Created '$(BINPATH)' directory"; \
-	else \
-		echo "'$(BINPATH)' directory exists.\n"; \
-	fi
 
 printf:
 	make -C $(PRINTF_PATH) all
@@ -71,7 +62,7 @@ clean:
 
 fclean: clean
 	make -C $(PRINTF_PATH) fclean
-	$(RM) $(BINPATH)
+	$(RM) $(SERVERNAME) $(CLIENTNAME)
 	@echo  "$(BLUE)------------------------------------------------------------------------$(END)"
 	@echo  "$(BLUE)All files removed$(END)"
 	@echo  "$(BLUE)------------------------------------------------------------------------$(END)"
@@ -84,7 +75,7 @@ msg:
 	@echo  "$(BLUE)------------------------------------------------------------------------$(END)"
 
 run:
-	./$(BINPATH)/$(SERVERNAME)
+	./$(SERVERNAME)
 
 debug: CFLAGS += -DDEBUG
 debug: re
