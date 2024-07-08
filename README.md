@@ -81,8 +81,8 @@ Contributions to the project are welcome and encouraged! If you have any suggest
 Please ensure your code follows the project's coding standards and practices.
 
 ## ☑️ Todo's
-- [ ] Reduce global variables
+- [X] Reduce global variables
 - [ ] It has been approved by Norminette
 - [ ] Makefile does relink
-- [ ] Minimize the number of signals and the time in process
-- [ ] Use signaction to display the caller process
+- [X] Minimize the number of signals and the time in process
+- [X] Use signaction to display the caller process
