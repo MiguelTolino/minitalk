@@ -6,7 +6,7 @@
 /*   By: migueltolino <migueltolino@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 18:23:17 by mmateo-t          #+#    #+#             */
-/*   Updated: 2024/07/09 00:13:01 by migueltolin      ###   ########.fr       */
+/*   Updated: 2024/07/09 00:21:27 by migueltolin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ void throw_error(char *error)
 
 void send_char(pid_t pid, char *c)
 {
-	ft_printf("Sending %s\n", c);
 	while (c)
 	{
 		if (*c == '0')
@@ -58,7 +57,7 @@ void send_char(pid_t pid, char *c)
 		{
 			break;
 		}
-		usleep(100);
+		usleep(500);
 		c++;
 	}
 }
@@ -96,6 +95,8 @@ int main(int argc, char const *argv[])
 		i++;
 	}
 	send_char(pid, charToBinary('\0'));
+	// Log after the message is fully sent
+	ft_printf("Message sent successfully.\n");
 	free(msg);
 	return 0;
 }

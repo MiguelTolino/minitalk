@@ -6,7 +6,7 @@
 /*   By: migueltolino <migueltolino@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 18:23:14 by mmateo-t          #+#    #+#             */
-/*   Updated: 2024/07/09 00:13:41 by migueltolin      ###   ########.fr       */
+/*   Updated: 2024/07/09 00:18:58 by migueltolin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void print_log(pid_t pid, const char *customMessage) {
     timeinfo = localtime(&now);
     strftime(buffer, 30, "%Y-%m-%d %H:%M:%S", timeinfo);
 
-    printf("%s%s%sTime: [%s%s%s] PID: [%s%s%s] %s\n",
+    printf("%s%s%sTime: [%s%s%s] PID: [%s%s%s] MSG: [%s]\n",
            LBLUE, SERVER_MSG, RESET,
            YELLOW, buffer, RESET,
            YELLOW, ft_itoa(pid), RESET,
