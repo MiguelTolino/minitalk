@@ -6,7 +6,7 @@
 /*   By: migueltolino <migueltolino@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 18:23:17 by mmateo-t          #+#    #+#             */
-/*   Updated: 2024/07/05 16:54:54 by migueltolin      ###   ########.fr       */
+/*   Updated: 2024/07/09 00:13:01 by migueltolin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void send_char(pid_t pid, char *c)
 		{
 			break;
 		}
-		usleep(1000);
+		usleep(100);
 		c++;
 	}
 }
@@ -77,8 +77,15 @@ int main(int argc, char const *argv[])
 	}
 	i = 0;
 	pid = ft_atoi(argv[1]);
-	if (pid < 0)
+	if (pid <= 0)
 		throw_error("PID must be a positive integer\n");
+
+	// Check if the PID exists
+	if (kill(pid, 0) == -1)
+	{
+		perror("Error checking PID"); // perror will print why the kill failed
+		return 1;					  // Or handle the error as appropriate
+	}
 	msg = ft_strdup(argv[2]);
 	if (!msg)
 		throw_error("Can't reserve memory");

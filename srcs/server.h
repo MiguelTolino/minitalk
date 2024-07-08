@@ -6,7 +6,7 @@
 /*   By: migueltolino <migueltolino@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 19:09:19 by mmateo-t          #+#    #+#             */
-/*   Updated: 2024/07/05 16:44:52 by migueltolin      ###   ########.fr       */
+/*   Updated: 2024/07/09 00:12:18 by migueltolin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@
 #include "ft_printf.h"
 #include "colors.h"
 #include <stdio.h>
+#include <stdbool.h> // Include for bool type
+#include <time.h>    // Include for time_t type
 
 #define SERVER_MSG "[SERVER]: "
 #define MSG "[MESSAGE]: ["

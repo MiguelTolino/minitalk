@@ -6,7 +6,7 @@
 /*   By: migueltolino <migueltolino@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 18:23:14 by mmateo-t          #+#    #+#             */
-/*   Updated: 2024/07/05 16:56:09 by migueltolin      ###   ########.fr       */
+/*   Updated: 2024/07/09 00:13:41 by migueltolin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,26 @@ void throw_error(const char *error)
 	ft_printf("%s%s%s%s", RED, "Error: ", RESET, error);
 }
 
+bool isStringFullOfZeros(const char *str) {
+    while (*str != '\0') { // Loop until the end of the string
+        if (*str != '0') {
+            return false; // Found a non-'0' character
+        }
+        str++; // Move to the next character
+    }
+    return true; // String is full of '0's
+}
+
 char binaryToASCII(const char *binary)
 {
 	if (ft_strlen(binary) != 8)
 	{
 		throw_error("Binary string must be 8 characters long");
 		return '\0'; // Return null character if input is invalid
+	}
+	if (isStringFullOfZeros(binary))
+	{
+		return ENDOFCHAR; // Return -1 if the binary string is all zeros
 	}
 
 	char result = 0;
@@ -44,14 +58,21 @@ char binaryToASCII(const char *binary)
 	return result;
 }
 
-void print_log(pid_t pid)
-{
-	printf("%s%s%sPID [%s%s%s]\n", LBLUE, SERVER_MSG, RESET, YELLOW, ft_itoa(pid), RESET);
-}
 
-void print_str(const char *str)
-{
-	ft_printf("%s%s%sMSG [%s%s%s]\n", LBLUE, SERVER_MSG, RESET, ORANGE, str, RESET);
+void print_log(pid_t pid, const char *customMessage) {
+    char buffer[30];
+    time_t now;
+    struct tm *timeinfo;
+
+    time(&now);
+    timeinfo = localtime(&now);
+    strftime(buffer, 30, "%Y-%m-%d %H:%M:%S", timeinfo);
+
+    printf("%s%s%sTime: [%s%s%s] PID: [%s%s%s] %s\n",
+           LBLUE, SERVER_MSG, RESET,
+           YELLOW, buffer, RESET,
+           YELLOW, ft_itoa(pid), RESET,
+           customMessage);
 }
 
 void sighandler(int signum)
@@ -71,18 +92,19 @@ void sighandler(int signum)
 	{
 		throw_error("Invalid signal\n");
 	}
-	if (buff_count == 8)
+	binary_buff[ft_strlen(binary_buff)] = c;
+	if (ft_strlen(binary_buff) == 8)
 	{
-		buff_count = 0;
 		ascii = binaryToASCII(binary_buff);
-		msg[ft_strlen(msg)] = ascii;
-		if (ascii == '\0')
+		if (ascii == ENDOFCHAR)
 		{
-			ft_printf("%s\n", msg);
-			//ft_bzero(msg, MAX_SIZE);
+			print_log(0, msg);
+			ft_bzero(msg, MAX_SIZE);
 		}
+		else
+			msg[ft_strlen(msg)] = ascii;
+		ft_bzero(binary_buff, sizeof(char) * 8);
 	}
-	binary_buff[buff_count++] = c;
 }
 
 int main(void)
@@ -97,16 +119,16 @@ int main(void)
 	}
 	buff_count = 0;
 	binary_buff = (char *)malloc(sizeof(char) * 8);
+	ft_bzero(binary_buff, sizeof(char) * 8);
 	msg = (char *)calloc(MAX_SIZE, sizeof(char));
 	if (!binary_buff || !msg)
 	{
 		throw_error("Error allocating memory\n");
 		return 1;
 	}
-
 	signal(SIGUSR1, sighandler);
 	signal(SIGUSR2, sighandler);
-	print_log(pid);
+	print_log(pid, "Server started listening for connections.");
 	while (1)
 	{
 		pause();
