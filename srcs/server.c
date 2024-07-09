@@ -6,7 +6,7 @@
 /*   By: migueltolino <migueltolino@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 18:23:14 by mmateo-t          #+#    #+#             */
-/*   Updated: 2024/07/09 00:18:58 by migueltolin      ###   ########.fr       */
+/*   Updated: 2024/07/09 14:55:52 by migueltolin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,23 @@ void throw_error(const char *error)
 	ft_printf("%s%s%s%s", RED, "Error: ", RESET, error);
 }
 
-bool isStringFullOfZeros(const char *str) {
-    while (*str != '\0') { // Loop until the end of the string
-        if (*str != '0') {
-            return false; // Found a non-'0' character
-        }
-        str++; // Move to the next character
-    }
-    return true; // String is full of '0's
+void send_ack(pid_t pid)
+{
+	if (kill(pid, SIGUSR1) < 0)
+		throw_error("An unexpected signal error occurs [SIGUSR1]");
+}
+
+bool isStringFullOfZeros(const char *str)
+{
+	while (*str != '\0')
+	{ // Loop until the end of the string
+		if (*str != '0')
+		{
+			return false; // Found a non-'0' character
+		}
+		str++; // Move to the next character
+	}
+	return true; // String is full of '0's
 }
 
 char binaryToASCII(const char *binary)
@@ -58,21 +67,27 @@ char binaryToASCII(const char *binary)
 	return result;
 }
 
+void print_log(pid_t pid, const char *customMessage)
+{
+	char buffer[30];
+	time_t now;
+	struct tm *timeinfo;
 
-void print_log(pid_t pid, const char *customMessage) {
-    char buffer[30];
-    time_t now;
-    struct tm *timeinfo;
+	time(&now);
+	timeinfo = localtime(&now);
+	strftime(buffer, 30, "%Y-%m-%d %H:%M:%S", timeinfo);
 
-    time(&now);
-    timeinfo = localtime(&now);
-    strftime(buffer, 30, "%Y-%m-%d %H:%M:%S", timeinfo);
-
-    printf("%s%s%sTime: [%s%s%s] PID: [%s%s%s] MSG: [%s]\n",
-           LBLUE, SERVER_MSG, RESET,
-           YELLOW, buffer, RESET,
-           YELLOW, ft_itoa(pid), RESET,
-           customMessage);
+	if (pid == 0)
+		printf("%s%s%s[%s%s%s] MSG: [%s]\n",
+			   LBLUE, SERVER_MSG, RESET,
+			   YELLOW, buffer, RESET,
+			   customMessage);
+	else
+		printf("%s%s%s[%s%s%s] PID: [%s%s%s] MSG: [%s]\n",
+			   LBLUE, SERVER_MSG, RESET,
+			   YELLOW, buffer, RESET,
+			   YELLOW, ft_itoa(pid), RESET,
+			   customMessage);
 }
 
 void sighandler(int signum)
@@ -98,7 +113,11 @@ void sighandler(int signum)
 		ascii = binaryToASCII(binary_buff);
 		if (ascii == ENDOFCHAR)
 		{
-			print_log(0, msg);
+			if (buff_count % 2 != 0)
+				send_ack(ft_atoi(msg));
+			else
+				print_log(0, msg);
+			buff_count++;
 			ft_bzero(msg, MAX_SIZE);
 		}
 		else

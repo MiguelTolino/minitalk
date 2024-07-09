@@ -6,7 +6,7 @@
 /*   By: migueltolino <migueltolino@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 18:23:17 by mmateo-t          #+#    #+#             */
-/*   Updated: 2024/07/09 00:21:27 by migueltolin      ###   ########.fr       */
+/*   Updated: 2024/07/09 14:51:49 by migueltolin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void usage()
 	exit(EXIT_FAILURE);
 }
 
-void throw_error(char *error)
+void throw_error(const char *error)
 {
 	ft_printf("%s%s%s%s", RED, "Error: ", RESET, error);
 }
@@ -62,11 +62,21 @@ void send_char(pid_t pid, char *c)
 	}
 }
 
+void sighandler(int signum)
+{
+	printf("Signal received: %d\n", signum);
+	if (signum == SIGUSR2)
+	{
+		ft_printf("Message was received: %sSIGUSR2%s\n", GREEN, RESET);
+	}
+}
+
 int main(int argc, char const *argv[])
 {
 	pid_t pid;
 	char *msg;
 	char *binary;
+	struct sigaction sa;
 	int i;
 
 	binary = NULL;
@@ -74,6 +84,9 @@ int main(int argc, char const *argv[])
 	{
 		usage();
 	}
+	sa.sa_handler = sighandler; // Your signal handler
+	sigemptyset(&sa.sa_mask);
+	sa.sa_flags = 0; // or SA_RESTART to automatically restart interrupted system calls
 	i = 0;
 	pid = ft_atoi(argv[1]);
 	if (pid <= 0)
@@ -82,8 +95,8 @@ int main(int argc, char const *argv[])
 	// Check if the PID exists
 	if (kill(pid, 0) == -1)
 	{
-		perror("Error checking PID"); // perror will print why the kill failed
-		return 1;					  // Or handle the error as appropriate
+		throw_error("Error checking PID"); // perror will print why the kill failed
+		return 1;						   // Or handle the error as appropriate
 	}
 	msg = ft_strdup(argv[2]);
 	if (!msg)
@@ -95,8 +108,23 @@ int main(int argc, char const *argv[])
 		i++;
 	}
 	send_char(pid, charToBinary('\0'));
-	// Log after the message is fully sent
-	ft_printf("Message sent successfully.\n");
 	free(msg);
+	i = 0;
+	msg = ft_itoa(getpid());
+	if (!msg)
+		throw_error("Can't reserve memory");
+	while (msg[i])
+	{
+		binary = charToBinary(msg[i]);
+		send_char(pid, binary);
+		i++;
+	}
+	send_char(pid, charToBinary('\0'));
+	free(msg);
+
+	if (sigaction(SIGUSR1, &sa, NULL) == -1)
+	{
+		throw_error("sigaction");
+	}
 	return 0;
 }
